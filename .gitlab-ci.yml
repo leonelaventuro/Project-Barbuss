@@ -1,0 +1,13 @@
+stages:
+  - Lint
+  - Deploy
+  - Lint after
+
+include:
+  - '/tooling/ci-deploy-branch-env.yml'
+  - '/tooling/ci-deploy-master-env.yml'
+  # - '/tooling/ci-deploy-master-pages.yml'
+  # - '/tooling/ci-deploy-master-ftp.yml'
+  # - '/tooling/ci-deploy-master-aws.yml'
+  # - '/tooling/ci-lint-branch.yml'
+  # - '/tooling/ci-lint-master.yml'

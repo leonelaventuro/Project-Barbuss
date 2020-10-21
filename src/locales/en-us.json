@@ -1,0 +1,18 @@
+{
+  "views": {
+    "home": {
+      "hero": "Seamless claims Management and Recovery Services",
+      "header": {
+        "who": "Who we are",
+        "what": "What we do",
+        "where": "Where we are",
+        "news": "News"
+      },
+      "who": {
+      }
+    }
+  },
+  "components": {
+    
+  }
+}

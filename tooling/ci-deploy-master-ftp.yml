@@ -1,0 +1,18 @@
+deploy-master-ftp:
+  image: amaysim/serverless:1.53.0
+  stage: Deploy
+  variables:
+    FOLDER: $CI_COMMIT_REF_NAME-$PROJECT_NAME
+    URL: https://$CI_COMMIT_REF_NAME-$DEV_URL
+  before_script:
+    # https://www.cyberciti.biz/tips/linux-upload-the-files-and-directory-tree-to-remote-ftp-server.html
+    - apk add ncftp
+  script:
+    - npm install
+    - npm run tooling:env
+    - npm run tooling:admin
+    - npm run build
+    - cd dist
+    - ncftpput -u $PROD_FTP_USER -p $PROD_FTP_PASSWORD -R -m $PROD_FTP_IP $PROD_FTP_FOLDER .
+  only:
+    - master

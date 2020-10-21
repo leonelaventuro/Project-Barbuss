@@ -1,0 +1,21 @@
+locale: es
+backend:
+  name: gitlab
+  repo: {{REPO}}
+  auth_type: implicit
+  app_id: {{APP_ID}}
+  branch: {{BRANCH}}
+
+media_folder: "static/uploads"
+public_folder: "/uploads"
+
+collections:
+  - label: "Pages"
+    name: "pages"
+    files:
+      - label: "Home"
+        name: "home"
+        file: "content/pages/home.md"
+        fields:
+          - {label: Image, name: image, widget: image, allow_multiple: false}
+          - {label: Text, name: text, widget: string}

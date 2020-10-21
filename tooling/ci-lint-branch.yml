@@ -1,0 +1,8 @@
+lint-branch:
+  image: amaysim/serverless:1.53.0
+  stage: Lint after
+  script:
+    - npm install
+    - npm run lint:code
+  except:
+    - master

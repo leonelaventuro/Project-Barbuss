@@ -1,0 +1,26 @@
+deploy-branch:
+  image: amaysim/serverless:1.53.0
+  stage: Deploy
+  variables:
+    FOLDER: $CI_COMMIT_REF_NAME-$PROJECT_NAME
+    URL: https://$CI_COMMIT_REF_NAME-$DEV_URL
+  before_script:
+    # https://stackoverflow.com/questions/55249866/gitlab-ci-alpine-image-host-key-verification-failed
+    - apk add --update openssh-client bash
+    - mkdir ~/.ssh
+    - ssh-keyscan -t rsa $DEV_SSH_IP >> ~/.ssh/known_hosts
+    # https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error
+    - chmod 400 $DEV_SSH_KEY
+  script:
+    - npm install
+    - npm run tooling:env
+    - npm run tooling:admin
+    - npm run build
+    # https://stackoverflow.com/questions/3314660/passing-variables-in-remote-ssh-command
+    - ssh -i $DEV_SSH_KEY $DEV_SSH_USER@$DEV_SSH_IP "rm -rf /home/$DEV_SSH_USER/$FOLDER"
+    - scp -i $DEV_SSH_KEY -r dist $DEV_SSH_USER@$DEV_SSH_IP:/home/$DEV_SSH_USER/$FOLDER
+  except:
+    - master
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    url: https://$CI_COMMIT_REF_NAME-$DEV_URL

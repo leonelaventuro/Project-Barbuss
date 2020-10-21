@@ -1,0 +1,16 @@
+stages:
+  - Deploy
+
+pages:
+  image: amaysim/serverless:1.53.0
+  stage: Deploy
+  script:
+    - npm install
+    - npm run tooling:env
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

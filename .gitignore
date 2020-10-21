@@ -1,0 +1,7 @@
+node_modules
+.env
+dist
+src/.temp
+.cache
+.DS_Store
+src/admin/config.yml
